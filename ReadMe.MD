@@ -1,4 +1,176 @@
-<div align="center">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+  @font-face {
+    font-family: 'Cera Pro';
+    src: local('Cera Pro Black'), local('CeraPro-Black');
+    font-weight: 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Cera Pro';
+    src: local('Cera Pro Medium'), local('CeraPro-Medium');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  :root {
+    --pms-2695: #1D1331;
+    --pms-2607: #500778;
+    --pms-2655: #9678D3;
+    --black: #000000;
+    --white: #FFFFFF;
+    --text-muted: #D1C4E9;
+  }
+
+  body, div, p, li, td, th {
+    font-family: 'Kanit', sans-serif !important;
+    font-weight: 300;
+    color: var(--white);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cera Pro', 'Kanit', sans-serif !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--white) !important;
+    border-bottom: none !important;
+  }
+
+  h1 {
+    color: var(--pms-2655) !important;
+    font-size: 2.25rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  h2 {
+    color: var(--white) !important;
+    font-size: 1.5rem !important;
+    border-left: 4px solid var(--pms-2655);
+    padding-left: 10px;
+    margin-top: 2rem !important;
+  }
+
+  h3 {
+    color: var(--pms-2655) !important;
+    font-size: 1.15rem !important;
+  }
+
+  strong, b {
+    font-family: 'Cera Pro', 'Kanit', sans-serif !important;
+    font-weight: 500 !important;
+    color: var(--pms-2655);
+  }
+
+  .hero-header {
+    background: linear-gradient(135deg, var(--black) 0%, var(--pms-2695) 100%);
+    border: 2px solid var(--pms-2607);
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  .hero-header h1 {
+    margin: 0 !important;
+    color: var(--white) !important;
+    font-size: 2.5rem !important;
+    text-shadow: 0 2px 10px rgba(150, 120, 211, 0.3);
+  }
+
+  .hero-header h3 {
+    margin-top: 8px !important;
+    color: var(--pms-2655) !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px;
+  }
+
+  blockquote {
+    background-color: var(--pms-2695) !important;
+    border-left: 5px solid var(--pms-2655) !important;
+    color: var(--white) !important;
+    padding: 15px 20px !important;
+    border-radius: 0 6px 6px 0;
+    margin: 20px 0 !important;
+  }
+
+  hr {
+    height: 2px !important;
+    background: linear-gradient(90deg, var(--pms-2607) 0%, var(--pms-2655) 50%, var(--pms-2607) 100%) !important;
+    border: none !important;
+    margin: 30px 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 20px 0 !important;
+    background-color: var(--black) !important;
+    border: 1px solid var(--pms-2607) !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+  }
+
+  th {
+    background-color: var(--pms-2695) !important;
+    color: var(--pms-2655) !important;
+    font-family: 'Cera Pro', 'Kanit', sans-serif !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    padding: 12px 15px !important;
+    border-bottom: 2px solid var(--pms-2607) !important;
+  }
+
+  td {
+    padding: 10px 15px !important;
+    border-bottom: 1px solid rgba(80, 7, 120, 0.4) !important;
+    color: var(--white) !important;
+  }
+
+  tr:nth-child(even) {
+    background-color: rgba(29, 19, 49, 0.5) !important;
+  }
+
+  code, pre {
+    font-family: 'Kanit', monospace !important;
+  }
+
+  p code, li code, td code {
+    background-color: var(--pms-2695) !important;
+    color: var(--pms-2655) !important;
+    border: 1px solid var(--pms-2607) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+  }
+
+  pre {
+    background-color: var(--black) !important;
+    border: 1px solid var(--pms-2607) !important;
+    border-left: 4px solid var(--pms-2655) !important;
+    border-radius: 6px !important;
+    padding: 15px !important;
+    overflow-x: auto !important;
+  }
+
+  .footer-card {
+    background: linear-gradient(135deg, var(--pms-2695) 0%, var(--black) 100%);
+    border: 1px solid var(--pms-2607);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .footer-card h2 {
+    border-left: none !important;
+    padding-left: 0 !important;
+    color: var(--pms-2655) !important;
+  }
+</style>
+
+<div class="hero-header">
 
 # SW Robotics Minnetrials Code
 
