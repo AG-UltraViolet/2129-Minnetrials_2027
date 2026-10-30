@@ -12,4 +12,6 @@ public class IOAllocation {
 
     public static final int kExampleArmMotor = 5;
 
+    public static final int kPDP = 50;
+
 }

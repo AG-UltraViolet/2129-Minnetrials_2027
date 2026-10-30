@@ -1,21 +1,232 @@
-<div align="center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SW Robotics Minnetrials Code</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
 
-# SW Robotics Minnetrials Code
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Cera Pro';
+            src: local('Cera Pro Black'), local('CeraPro-Black');
+            font-weight: 900;
+            font-style: normal;
+        }
 
-### Command-Based Java Guide For New Code Team Members
+        @font-face {
+            font-family: 'Cera Pro';
+            src: local('Cera Pro Medium'), local('CeraPro-Medium');
+            font-weight: 500;
+            font-style: normal;
+        }
 
-</div>
+        :root {
+            /* Palette Configuration */
+            --color-white: #FFFFFF;
+            --color-black: #111111;
+            --color-pms-2655: #9678D3; /* PMS 2655 C */
+            --color-pms-2607: #500778; /* PMS 2607 C */
+            --color-pms-2695: #1C0A35; /* PMS 2695 C */
+            --color-custom-blue: #0969DA;
 
----
+            /* Core Styling Assignments */
+            --bg-main: var(--color-pms-2695);
+            --bg-card: #251242;
+            --bg-code: #120524;
+            --text-main: var(--color-white);
+            --text-muted: var(--color-pms-2655);
+            --accent: var(--color-pms-2655);
+            --accent-dark: var(--color-pms-2607);
+            --border: #3D206B;
+        }
 
-> **Purpose:** This repository contains the command-based Java code for the SW Robotics Minnetrials robot. This document explains our code structure, subsystem format, NetworkTables tuning, SmartDashboard logging, commands, controller bindings, autonomous routines, and how to use them to make your own robot.
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
 
----
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
 
-# Project Structure
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cera Pro', 'Kanit', sans-serif;
+            font-weight: 900;
+            color: var(--color-white);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
 
-```text
-src/main/java/com/swrobotics
+        h1 {
+            font-size: 2.5rem;
+            color: var(--color-pms-2655);
+            border-bottom: 3px solid var(--color-pms-2607);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--color-white);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-family: 'Cera Pro', 'Kanit', sans-serif;
+            font-weight: 500;
+            color: var(--color-pms-2655);
+        }
+
+        p, li {
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        a {
+            color: var(--color-custom-blue);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .custom-blue-text {
+            color: var(--color-custom-blue);
+        }
+
+        /* Lists */
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            background-color: var(--color-pms-2607);
+            border-left: 5px solid var(--color-pms-2655);
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            color: var(--color-white);
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Code Blocks & Inline Code */
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--color-black);
+            color: var(--color-pms-2655);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--bg-code);
+            border: 1px solid var(--border);
+            padding: 18px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: #E0D0FF;
+            padding: 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95rem;
+            background-color: var(--color-black);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--color-pms-2607);
+            color: var(--color-white);
+            font-family: 'Cera Pro', 'Kanit', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #1A0B30;
+        }
+
+        tr:hover {
+            background-color: #29124A;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border);
+            margin: 30px 0;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>SW Robotics Minnetrials Code</h1>
+
+    <h3>Command-Based Java Guide For New Code Team Members</h3>
+
+    <hr>
+
+    <blockquote>
+        <p><strong>Purpose:</strong> This repository contains the command-based Java code for the SW Robotics Minnetrials robot. This document explains our code structure, subsystem format, NetworkTables tuning, SmartDashboard logging, commands, controller bindings, autonomous routines, and how to use them to make your own robot.</p>
+    </blockquote>
+
+    <hr>
+
+    <h1>Project Structure</h1>
+
+<pre><code>src/main/java/com/swrobotics
 │
 ├── lib/
 │   ├── ctre/...
@@ -46,37 +257,91 @@ src/main/java/com/swrobotics
 │   ├── Robot.java
 │   └── RobotContainer.java
 │   
-└──
+└──</code></pre>
 
-| Location | Responsibility |
-|---|---|
-| `lib/` | This has information that allows your network tables to run. don't really need to edit |
-| `commands/` | Contains reusable actions and autonomous sequences: for example, autoalign. edit this |
-| `config/` | Contains global constants for field positions, Motor IDs, and Robot constants. edit this |
-| `control/` | Maps controls, default commands, button bindings. edit this |
-| `logging/` | Used so you can see where your robot is on the field in sim and real game. |
-| `subsystems/` | Controls individual physical mechanisms. create new ones. |
-| `Main.java` | Starts the robot program: no need to mess with. |
-| `Robot.java` | Runs robot lifecycle methods and the command scheduler: not really needed to mess with |
-| `RobotContainer.java` | Creates subsystems, and autonomous routines: you need to use this |
-|---|---|
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Responsibility</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>lib/</code></td>
+                <td>This has information that allows your network tables to run. don't really need to edit</td>
+            </tr>
+            <tr>
+                <td><code>commands/</code></td>
+                <td>Contains reusable actions and autonomous sequences: for example, autoalign. edit this</td>
+            </tr>
+            <tr>
+                <td><code>config/</code></td>
+                <td>Contains global constants for field positions, Motor IDs, and Robot constants. edit this</td>
+            </tr>
+            <tr>
+                <td><code>control/</code></td>
+                <td>Maps controls, default commands, button bindings. edit this</td>
+            </tr>
+            <tr>
+                <td><code>logging/</code></td>
+                <td>Used so you can see where your robot is on the field in sim and real game.</td>
+            </tr>
+            <tr>
+                <td><code>subsystems/</code></td>
+                <td>Controls individual physical mechanisms. create new ones.</td>
+            </tr>
+            <tr>
+                <td><code>Main.java</code></td>
+                <td>Starts the robot program: no need to mess with.</td>
+            </tr>
+            <tr>
+                <td><code>Robot.java</code></td>
+                <td>Runs robot lifecycle methods and the command scheduler: not really needed to mess with</td>
+            </tr>
+            <tr>
+                <td><code>RobotContainer.java</code></td>
+                <td>Creates subsystems, and autonomous routines: you need to use this</td>
+            </tr>
+        </tbody>
+    </table>
 
-# Command-Based Overview
+    <h1>Command-Based Overview</h1>
 
-This project uses the WPILib command-based framework.
+    <p>This project uses the WPILib command-based framework.</p>
 
-A **subsystem** represents a physical robot mechanism. A **command** represents an action the robot can perform with one or more mechanisms.
+    <p>A <strong>subsystem</strong> represents a physical robot mechanism. A <strong>command</strong> represents an action the robot can perform with one or more mechanisms.</p>
 
-| Type | Description | Examples |
-|---|---|---|
-| Subsystem | Owns hardware and mechanism behavior | Drivebase, arm, shooter, intake |
-| Command | Requests a robot action | Drive with joystick, move arm down, spin shooter |
-| State | Describes the intended mode of a subsystem | `IDLE`, `SHOOT`, `UP`, `DOWN` |
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Subsystem</td>
+                <td>Owns hardware and mechanism behavior</td>
+                <td>Drivebase, arm, shooter, intake</td>
+            </tr>
+            <tr>
+                <td>Command</td>
+                <td>Requests a robot action</td>
+                <td>Drive with joystick, move arm down, spin shooter</td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>Describes the intended mode of a subsystem</td>
+                <td><code>IDLE</code>, <code>SHOOT</code>, <code>UP</code>, <code>DOWN</code></td>
+            </tr>
+        </tbody>
+    </table>
 
-The expected flow is:
+    <p>The expected flow is:</p>
 
-```text
-Controller Input
+<pre><code>Controller Input
       ↓
 ControlBoard uses the input to tell a command to run
       ↓
@@ -86,34 +351,30 @@ Subsystem State changes
       ↓
 periodic() updates
       ↓
-Motor/Sensor Control and SmartDashboard Logging update as well
-```
+Motor/Sensor Control and SmartDashboard Logging update as well</code></pre>
 
-A subsystem owns its motors, sensors, configuration, states, NetworkTables entries, and SmartDashboard logs.
+    <p>A subsystem owns its motors, sensors, configuration, states, NetworkTables entries, and SmartDashboard logs.</p>
 
-A command should request a subsystem behavior. It should not contain random motor-control code that belongs inside a subsystem.
+    <p>A command should request a subsystem behavior. It should not contain random motor-control code that belongs inside a subsystem.</p>
 
----
+    <hr>
 
-# Subsystem Format
+    <h1>Subsystem Format</h1>
 
-Every physical robot mechanism should have a subsystem.
+    <p>Every physical robot mechanism should have a subsystem.</p>
 
-Examples:
+    <p>Examples:</p>
 
-```text
-DriveSubsystem
+<pre><code>DriveSubsystem
 ExampleArmSubsystem
 ExampleShooterSubsystem
 IntakeSubsystem
 IndexerSubsystem
-ClimberSubsystem
-```
+ClimberSubsystem</code></pre>
 
-A subsystem should usually follow this organization:
+    <p>A subsystem should usually follow this organization:</p>
 
-```java
-public class ExampleSubsystem extends SubsystemBase {
+<pre><code><span class="custom-blue-text">public class</span> ExampleSubsystem <span class="custom-blue-text">extends</span> SubsystemBase {
     // 1. State enum
 
     // 2. Hard-coded hardware constants
@@ -131,13 +392,11 @@ public class ExampleSubsystem extends SubsystemBase {
     // 8. Public helper methods
 
     // 9. Command factory methods
-}
-```
+}</code></pre>
 
-## Basic subsystem template
+    <h2>Basic subsystem template</h2>
 
-```java
-package com.swrobotics.robot.subsystems;
+<pre><code>package com.swrobotics.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -173,17 +432,15 @@ public class ExampleSubsystem extends SubsystemBase {
     public void setTargetState(State state) {
         targetState = state;
     }
-}
-```
+}</code></pre>
 
-## State rules
+    <h2>State rules</h2>
 
-States should describe a real mechanism behavior.
+    <p>States should describe a real mechanism behavior.</p>
 
-Good state names:
+    <p>Good state names:</p>
 
-```java
-IDLE
+<pre><code>IDLE
 INTAKE
 OUTTAKE
 FEED
@@ -194,207 +451,204 @@ STOW
 DEPLOY
 SHOOT
 REVERSE
-CLIMB
-```
+CLIMB</code></pre>
 
-Avoid state names based on code details or controller buttons.
+    <p>Avoid state names based on code details or controller buttons.</p>
 
-Avoid:
+    <p>Avoid:</p>
 
-```java
-BUTTON_A
+<pre><code>BUTTON_A
 MOTOR_50_PERCENT
 RUN_MOTOR
 TEST_2
 DO_THING
 MOTOR GO
-shoot <- this one is bad because it isn't all caps.
-```
+shoot &lt;- this one is bad because it isn't all caps.</code></pre>
 
----
+    <hr>
 
-# Constants and Tunables
+    <h1>Constants and Tunables</h1>
 
-Every number in robot code should have a name and a reason.
+    <p>Every number in robot code should have a name and a reason.</p>
 
-Don't leave unexplained numbers directly in motor-control calls; otherwise, it will be hard to tell what they mean or are.
+    <p>Don't leave unexplained numbers directly in motor-control calls; otherwise, it will be hard to tell what they mean or are.</p>
 
-Bad:
+    <p>Bad:</p>
 
-```java
-motor.setControl(voltageControl.withOutput(6.0));
-```
+<pre><code>motor.setControl(voltageControl.withOutput(6.0));</code></pre>
 
-Better:
+    <p>Better:</p>
 
-```java
-private final NTEntry<Double> intakeVoltage = new NTDouble("Intake/IntakeVoltage", 6.0).setPersistent();
-```
+<pre><code>private final NTEntry&lt;Double&gt; intakeVoltage = new NTDouble("Intake/IntakeVoltage", 6.0).setPersistent();</code></pre>
 
-```java
-motor.setControl(voltageControl.withOutput(intakeVoltage.get()));
-```
+<pre><code>motor.setControl(voltageControl.withOutput(intakeVoltage.get()));</code></pre>
 
-## Hard-coded constants
+    <h2>Hard-coded constants</h2>
 
-Use hard-coded values for physical hardware configuration and fixed design decisions.
+    <p>Use hard-coded values for physical hardware configuration and fixed design decisions.</p>
 
-```java
-private static final int kMotorID = 5;
+<pre><code>private static final int kMotorID = 5;
 private static final InvertedValue kMotorInverted = InvertedValue.Clockwise_Positive;
-private static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake;
-```
+private static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake;</code></pre>
 
-Use hard-coded constants for:
+    <p>Use hard-coded constants for:</p>
 
-- CAN IDs
-- DIO ports
-- PWM ports
-- Motor inversion
-- Brake/coast mode
-- Fixed physical configuration
-- Static safety choices
+    <ul>
+        <li>CAN IDs</li>
+        <li>DIO ports</li>
+        <li>PWM ports</li>
+        <li>Motor inversion</li>
+        <li>Brake/coast mode</li>
+        <li>Fixed physical configuration</li>
+        <li>Static safety choices</li>
+    </ul>
 
-ALWAYS make CAN IDs hard-coded values.
+    <p><strong>ALWAYS make CAN IDs hard-coded values.</strong></p>
 
-## NetworkTables tunables
+    <h2>NetworkTables tunables</h2>
 
-Use NetworkTables entries for numbers that may change during robot testing, calibration, driver practice, or mechanism tuning.
+    <p>Use NetworkTables entries for numbers that may change during robot testing, calibration, driver practice, or mechanism tuning.</p>
 
-```java
-private final NTEntry<Double> kP = new NTDouble("ExampleArm/kP", 2.0).setPersistent();
-private final NTEntry<Double> kI = new NTDouble("ExampleArm/kI", 0.0).setPersistent();
-private final NTEntry<Double> kD = new NTDouble("ExampleArm/kD", 0.1).setPersistent();
-```
+<pre><code>private final NTEntry&lt;Double&gt; kP = new NTDouble("ExampleArm/kP", 2.0).setPersistent();
+private final NTEntry&lt;Double&gt; kI = new NTDouble("ExampleArm/kI", 0.0).setPersistent();
+private final NTEntry&lt;Double&gt; kD = new NTDouble("ExampleArm/kD", 0.1).setPersistent();</code></pre>
 
-Use NetworkTables values for:
+    <p>Use NetworkTables values for:</p>
 
-- PID values
-- Arm setpoints
-- Shooter speed targets
-- Drive speed scaling
-- Joystick deadband
-- Motion Magic velocity and acceleration
-- Current limits that may need testing adjustments
-- Vision aiming constants
+    <ul>
+        <li>PID values</li>
+        <li>Arm setpoints</li>
+        <li>Shooter speed targets</li>
+        <li>Drive speed scaling</li>
+        <li>Joystick deadband</li>
+        <li>Motion Magic velocity and acceleration</li>
+        <li>Current limits that may need testing adjustments</li>
+        <li>Vision aiming constants</li>
+    </ul>
 
-## PID overview
+    <h2>PID overview</h2>
 
-| Term | Full Name | Purpose |
-|---|---|---|
-| `kP` | Proportional | Responds to the current error |
-| `kI` | Integral | Corrects error that remains for a long time |
-| `kD` | Derivative | Reduces overshoot and oscillation |
+    <table>
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>Full Name</th>
+                <th>Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>kP</code></td>
+                <td>Proportional</td>
+                <td>Responds to the current error</td>
+            </tr>
+            <tr>
+                <td><code>kI</code></td>
+                <td>Integral</td>
+                <td>Corrects error that remains for a long time</td>
+            </tr>
+            <tr>
+                <td><code>kD</code></td>
+                <td>Derivative</td>
+                <td>Reduces overshoot and oscillation</td>
+            </tr>
+        </tbody>
+    </table>
 
-Safe tuning order:
+    <p>Safe tuning order:</p>
 
-1. Start with `kI = 0.0` and `kD = 0.0`.
-2. Increase `kP` until the mechanism responds well.
-3. Add a small `kD` only if the mechanism overshoots or oscillates.
-4. Add a very small `kI` only if a consistent remaining error cannot be fixed another way.
+    <ol>
+        <li>Start with <code>kI = 0.0</code> and <code>kD = 0.0</code>.</li>
+        <li>Increase <code>kP</code> until the mechanism responds well.</li>
+        <li>Add a small <code>kD</code> only if the mechanism overshoots or oscillates.</li>
+        <li>Add a very small <code>kI</code> only if a consistent remaining error cannot be fixed another way.</li>
+    </ol>
 
----
+    <hr>
 
-# SmartDashboard Logging
+    <h1>SmartDashboard Logging</h1>
 
-Every subsystem should report useful information to SmartDashboard.
+    <p>Every subsystem should report useful information to SmartDashboard.</p>
 
-The goal of dashboard logging is to answer:
+    <p>The goal of dashboard logging is to answer:</p>
 
-- What state is the subsystem in?
-- What target did the code request?
-- What does the sensor actually read?
-- Is the mechanism at the target?
-- Is the motor drawing too much current?
-- Is the motor getting too hot?
+    <ul>
+        <li>What state is the subsystem in?</li>
+        <li>What target did the code request?</li>
+        <li>What does the sensor actually read?</li>
+        <li>Is the mechanism at the target?</li>
+        <li>Is the motor drawing too much current?</li>
+        <li>Is the motor getting too hot?</li>
+    </ul>
 
-## Log naming format
+    <h2>Log naming format</h2>
 
-Use this naming pattern:
+    <p>Use this naming pattern:</p>
 
-```text
-SubsystemName/ValueName
-```
+<pre><code>SubsystemName/ValueName</code></pre>
 
-Examples:
+    <p>Examples:</p>
 
-```java
-SmartDashboard.putString("ExampleArm/State", targetState.name());
+<pre><code>SmartDashboard.putString("ExampleArm/State", targetState.name());
 SmartDashboard.putNumber("ExampleArm/TargetPositionRotations", targetPositionRotations);
 SmartDashboard.putNumber("ExampleArm/ActualPositionRotations", armMotor.getPosition().getValueAsDouble());
 SmartDashboard.putNumber("ExampleArm/MotorVoltage", armMotor.getMotorVoltage().getValueAsDouble());
-SmartDashboard.putNumber("ExampleArm/TemperatureCelsius", armMotor.getDeviceTemp().getValueAsDouble());
-```
+SmartDashboard.putNumber("ExampleArm/TemperatureCelsius", armMotor.getDeviceTemp().getValueAsDouble());</code></pre>
 
-## Recommended TalonFX logs
+    <h2>Recommended TalonFX logs</h2>
 
-```java
-SmartDashboard.putString("ExampleArm/State", targetState.name());
+<pre><code>SmartDashboard.putString("ExampleArm/State", targetState.name());
 SmartDashboard.putNumber("Subsystem/PositionRotations", motor.getPosition().getValueAsDouble());
 SmartDashboard.putNumber("Subsystem/VelocityRPS", motor.getVelocity().getValueAsDouble());
 SmartDashboard.putNumber("Subsystem/MotorVoltage", motor.getMotorVoltage().getValueAsDouble());
-SmartDashboard.putNumber("Subsystem/TemperatureCelsius", motor.getDeviceTemp().getValueAsDouble());
-```
+SmartDashboard.putNumber("Subsystem/TemperatureCelsius", motor.getDeviceTemp().getValueAsDouble());</code></pre>
 
----
+    <hr>
 
-# Adding a New Subsystem
+    <h1>Adding a New Subsystem</h1>
 
-Follow this process whenever you add a new mechanism.
+    <p>Follow this process whenever you add a new mechanism.</p>
 
-## 1. Create the file
+    <h2>1. Create the file</h2>
 
-For an intake:
+    <p>For an intake:</p>
 
-```text
-src/main/java/com/swrobotics/robot/subsystems/intake/IntakeSubsystem.java
-```
+<pre><code>src/main/java/com/swrobotics/robot/subsystems/intake/IntakeSubsystem.java</code></pre>
 
-```java
-package com.swrobotics.robot.subsystems.intake;
+<pre><code>package com.swrobotics.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
-}
-```
+}</code></pre>
 
-## 2. Add states
+    <h2>2. Add states</h2>
 
-```java
-public enum State {
+<pre><code>public enum State {
     IDLE,
     INTAKE,
     OUTTAKE
-}
-```
+}</code></pre>
 
-## 3. Add hardware constants
+    <h2>3. Add hardware constants</h2>
 
-```java
-private static final int kMotorID = 8;
+<pre><code>private static final int kMotorID = 8;
 private static final InvertedValue kMotorInverted = InvertedValue.Clockwise_Positive;
-private static final NeutralModeValue kNeutralMode = NeutralModeValue.Coast;
-```
+private static final NeutralModeValue kNeutralMode = NeutralModeValue.Coast;</code></pre>
 
-## 4. Add tunable values
+    <h2>4. Add tunable values</h2>
 
-```java
-private final NTEntry<Double> intakeVoltage = new NTDouble("Intake/IntakeVoltage", 6.0).setPersistent();
-private final NTEntry<Double> outtakeVoltage = new NTDouble("Intake/OuttakeVoltage", -4.0).setPersistent();
-```
+<pre><code>private final NTEntry&lt;Double&gt; intakeVoltage = new NTDouble("Intake/IntakeVoltage", 6.0).setPersistent();
+private final NTEntry&lt;Double&gt; outtakeVoltage = new NTDouble("Intake/OuttakeVoltage", -4.0).setPersistent();</code></pre>
 
-## 5. Create motor hardware
+    <h2>5. Create motor hardware</h2>
 
-```java
-private final TalonFX motor = new TalonFX(kMotorID);
-private final VoltageOut voltageControl = new VoltageOut(0.0);
-```
+<pre><code>private final TalonFX motor = new TalonFX(kMotorID);
+private final VoltageOut voltageControl = new VoltageOut(0.0);</code></pre>
 
-## 6. Control the mechanism in `periodic()`
+    <h2>6. Control the mechanism in <code>periodic()</code></h2>
 
-```java
-@Override
+<pre><code>@Override
 public void periodic() {
     switch (targetState) {
         case IDLE:
@@ -409,90 +663,111 @@ public void periodic() {
             motor.setControl(voltageControl.withOutput(outtakeVoltage.get()));
             break;
     }
-}
-```
+}</code></pre>
 
-## 7. Add SmartDashboard logs
+    <h2>7. Add SmartDashboard logs</h2>
 
-```java
-SmartDashboard.putString("Intake/State", targetState.name());
+<pre><code>SmartDashboard.putString("Intake/State", targetState.name());
 SmartDashboard.putNumber("Intake/VelocityRPS", motor.getVelocity().getValueAsDouble());
 SmartDashboard.putNumber("Intake/SupplyCurrentAmps", motor.getSupplyCurrent().getValueAsDouble());
-SmartDashboard.putNumber("Intake/TemperatureCelsius", motor.getDeviceTemp().getValueAsDouble());
-```
+SmartDashboard.putNumber("Intake/TemperatureCelsius", motor.getDeviceTemp().getValueAsDouble());</code></pre>
 
-## 8. Add state methods and a command
+    <h2>8. Add state methods and a command</h2>
 
-```java
-public void setTargetState(State state) {
+<pre><code>public void setTargetState(State state) {
     targetState = state;
 }
 
 public Command commandSetState(State state) {
-    return Commands.run(() -> setTargetState(state), this).withName("Intake " + state.name());
-}
-```
+    return Commands.run(() -&gt; setTargetState(state), this).withName("Intake " + state.name());
+}</code></pre>
 
-## 9. Create it in `RobotContainer`
+    <h2>9. Create it in <code>RobotContainer</code></h2>
 
-```java
-public final IntakeSubsystem intake = new IntakeSubsystem();
-```
+<pre><code>public final IntakeSubsystem intake = new IntakeSubsystem();</code></pre>
 
-## 10. Bind a controller input
+    <h2>10. Bind a controller input</h2>
 
-```java
-operator.rightTrigger().whileTrue(robot.intake.commandSetState(IntakeSubsystem.State.INTAKE));
-```
+<pre><code>operator.rightTrigger().whileTrue(robot.intake.commandSetState(IntakeSubsystem.State.INTAKE));</code></pre>
 
----
+    <hr>
 
-# Command Format
+    <h1>Command Format</h1>
 
-Commands represent robot actions.
+    <p>Commands represent robot actions.</p>
 
-Use a command when you need to:
+    <p>Use a command when you need to:</p>
 
-- Change a subsystem state
-- Coordinate multiple subsystems
-- Run a mechanism for a limited time
-- Wait for a sensor
-- Write an autonomous routine
-- Build a reusable robot action
+    <ul>
+        <li>Change a subsystem state</li>
+        <li>Coordinate multiple subsystems</li>
+        <li>Run a mechanism for a limited time</li>
+        <li>Wait for a sensor</li>
+        <li>Write an autonomous routine</li>
+        <li>Build a reusable robot action</li>
+    </ul>
 
-## Command patterns
+    <h2>Command patterns</h2>
 
-| Pattern | Use when | Example |
-|---|---|---|
-| `Commands.run(...)` | The action continues until interrupted | Keep shooter spinning while held |
-| `Commands.runOnce(...)` | The action occurs once and then finishes | Set arm state to `DOWN` |
-| `.withTimeout(...)` | Stop after a fixed amount of time | Drive forward for 2 seconds |
-| `.until(...)` | Stop when a condition becomes true | Intake until a sensor detects a note |
-| `Commands.sequence(...)` | Run actions in order | Drive, shoot, then stop |
-| `Commands.parallel(...)` | Run actions at the same time | Drive while raising an arm |
+    <table>
+        <thead>
+            <tr>
+                <th>Pattern</th>
+                <th>Use when</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>Commands.run(...)</code></td>
+                <td>The action continues until interrupted</td>
+                <td>Keep shooter spinning while held</td>
+            </tr>
+            <tr>
+                <td><code>Commands.runOnce(...)</code></td>
+                <td>The action occurs once and then finishes</td>
+                <td>Set arm state to <code>DOWN</code></td>
+            </tr>
+            <tr>
+                <td><code>.withTimeout(...)</code></td>
+                <td>Stop after a fixed amount of time</td>
+                <td>Drive forward for 2 seconds</td>
+            </tr>
+            <tr>
+                <td><code>.until(...)</code></td>
+                <td>Stop when a condition becomes true</td>
+                <td>Intake until a sensor detects a note</td>
+            </tr>
+            <tr>
+                <td><code>Commands.sequence(...)</code></td>
+                <td>Run actions in order</td>
+                <td>Drive, shoot, then stop</td>
+            </tr>
+            <tr>
+                <td><code>Commands.parallel(...)</code></td>
+                <td>Run actions at the same time</td>
+                <td>Drive while raising an arm</td>
+            </tr>
+        </tbody>
+    </table>
 
-## Simple state command
+    <h2>Simple state command</h2>
 
-Subsystem commands should usually be short:
+    <p>Subsystem commands should usually be short:</p>
 
-```java
-public Command commandSetState(State state) {
-    return Commands.run(() -> setTargetState(state), this).withName("Shooter " + state.name());
-}
-```
+<pre><code>public Command commandSetState(State state) {
+    return Commands.run(() -&gt; setTargetState(state), this).withName("Shooter " + state.name());
+}</code></pre>
 
----
+    <hr>
 
-# Example Drive Command
+    <h1>Example Drive Command</h1>
 
-Create:
+    <p>Create:</p>
 
-```text
-src/main/java/com/swrobotics/robot/commands/ExampleDriveCommand.java
-```
+<pre><code>src/main/java/com/swrobotics/robot/commands/ExampleDriveCommand.java</code></pre>
 
-```java
-package com.swrobotics.robot.commands;
+<pre><code>package com.swrobotics.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
@@ -533,13 +808,11 @@ public class ExampleDriveCommand extends Command {
     public boolean isFinished() {
         return false;
     }
-}
-```
+}</code></pre>
 
-Your `DriveSubsystem` needs these public methods:
+    <p>Your <code>DriveSubsystem</code> needs these public methods:</p>
 
-```java
-public void arcadeDrive(double forward, double turn) {
+<pre><code>public void arcadeDrive(double forward, double turn) {
     double leftOutput = forward + turn;
     double rightOutput = forward - turn;
 
@@ -554,29 +827,23 @@ public void stop() {
     leftMotor2.set(ControlMode.PercentOutput, 0.0);
     rightMotor1.set(ControlMode.PercentOutput, 0.0);
     rightMotor2.set(ControlMode.PercentOutput, 0.0);
-}
-```
+}</code></pre>
 
-Set it as the default drive command:
+    <p>Set it as the default drive command:</p>
 
-```java
-drive.setDefaultCommand(new ExampleDriveCommand(drive, () -> controls.driver.getLeftY(), () -> controls.driver.getRightX()));
-```
+<pre><code>drive.setDefaultCommand(new ExampleDriveCommand(drive, () -&gt; controls.driver.getLeftY(), () -&gt; controls.driver.getRightX()));</code></pre>
 
-This command runs continuously during teleoperated driving. It reads joystick values, applies deadband, and sends arcade-drive outputs to the drivetrain.
+    <p>This command runs continuously during teleoperated driving. It reads joystick values, applies deadband, and sends arcade-drive outputs to the drivetrain.</p>
 
----
+    <hr>
 
-# Example Autonomous Command
+    <h1>Example Autonomous Command</h1>
 
-Create:
+    <p>Create:</p>
 
-```text
-src/main/java/com/swrobotics/robot/commands/ExampleAutonomous.java
-```
+<pre><code>src/main/java/com/swrobotics/robot/commands/ExampleAutonomous.java</code></pre>
 
-```java
-package com.swrobotics.robot.commands;
+<pre><code>package com.swrobotics.robot.commands;
 
 import com.swrobotics.robot.subsystems.ExampleShooterSubsystem;
 import com.swrobotics.robot.subsystems.drive.DriveSubsystem;
@@ -597,155 +864,292 @@ public final class ExampleAutonomous {
                 shooter.commandSetState(ExampleShooterSubsystem.State.IDLE).withTimeout(0.02)
         ).withName("Example Autonomous");
     }
-}
-```
+}</code></pre>
 
-The routine does this:
+    <p>The routine does this:</p>
 
-| Step | Action |
-|---|---|
-| 1 | Make sure the shooter is idle |
-| 2 | Drive forward at 40% output for 2 seconds |
-| 3 | Stop the drivetrain |
-| 4 | Spin the shooter for 1.5 seconds |
-| 5 | Return the shooter to idle |
+    <table>
+        <thead>
+            <tr>
+                <th>Step</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Make sure the shooter is idle</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Drive forward at 40% output for 2 seconds</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Stop the drivetrain</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Spin the shooter for 1.5 seconds</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Return the shooter to idle</td>
+            </tr>
+        </tbody>
+    </table>
 
-Add these methods to `DriveSubsystem`:
+    <p>Add these methods to <code>DriveSubsystem</code>:</p>
 
-```java
-public Command driveForTime(double forwardOutput, double turnOutput, double seconds) {
-    return run(() -> arcadeDrive(forwardOutput, turnOutput)).withTimeout(seconds).finallyDo(interrupted -> stop()).withName("Drive For Time");
+<pre><code>public Command driveForTime(double forwardOutput, double turnOutput, double seconds) {
+    return run(() -&gt; arcadeDrive(forwardOutput, turnOutput)).withTimeout(seconds).finallyDo(interrupted -&gt; stop()).withName("Drive For Time");
 }
 
 public Command stopCommand() {
     return runOnce(this::stop).withName("Drive Stop");
-}
-```
+}</code></pre>
 
-Add this to `RobotContainer.java`:
+    <p>Add this to <code>RobotContainer.java</code>:</p>
 
-```java
-import com.swrobotics.robot.commands.ExampleAutonomous;
+<pre><code>import com.swrobotics.robot.commands.ExampleAutonomous;
 
 public Command getAutonomousCommand() {
     return ExampleAutonomous.create(drive, exampleShooter);
-}
-```
+}</code></pre>
 
----
+    <hr>
 
-# Controller Bindings
+    <h1>Controller Bindings</h1>
 
-Controller bindings belong in:
+    <p>Controller bindings belong in:</p>
 
-```text
-control/ControlBoard.java
-```
+<pre><code>control/ControlBoard.java</code></pre>
 
-Example:
+    <p>Example:</p>
 
-```java
-private void configureControls() {
-    robot.drive.setDefaultCommand(new ExampleDriveCommand(robot.drive, () -> driver.getLeftY(), () -> driver.getRightX()));
+<pre><code>private void configureControls() {
+    robot.drive.setDefaultCommand(new ExampleDriveCommand(robot.drive, () -&gt; driver.getLeftY(), () -&gt; driver.getRightX()));
 
     operator.a().onTrue(robot.exampleArm.commandSetState(ExampleArmSubsystem.State.UP));
     operator.b().onTrue(robot.exampleArm.commandSetState(ExampleArmSubsystem.State.DOWN));
 
     operator.rightBumper().whileTrue(robot.exampleShooter.commandSetState(ExampleShooterSubsystem.State.SHOOT));
     operator.leftBumper().whileTrue(robot.exampleShooter.commandSetState(ExampleShooterSubsystem.State.REVERSE));
-}
-```
+}</code></pre>
 
-## Button binding choices
+    <h2>Button binding choices</h2>
 
-| Binding | Use case |
-|---|---|
-| `onTrue()` | Change a state once when pressed |
-| `whileTrue()` | Run a command only while a button is held |
-| `onFalse()` | Run a command when a button is released |
-| `toggleOnTrue()` | Toggle a command on and off |
+    <table>
+        <thead>
+            <tr>
+                <th>Binding</th>
+                <th>Use case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>onTrue()</code></td>
+                <td>Change a state once when pressed</td>
+            </tr>
+            <tr>
+                <td><code>whileTrue()</code></td>
+                <td>Run a command only while a button is held</td>
+            </tr>
+            <tr>
+                <td><code>onFalse()</code></td>
+                <td>Run a command when a button is released</td>
+            </tr>
+            <tr>
+                <td><code>toggleOnTrue()</code></td>
+                <td>Toggle a command on and off</td>
+            </tr>
+        </tbody>
+    </table>
 
-Use `onTrue()` for arm positions because the arm should stay at the requested position.
+    <p>Use <code>onTrue()</code> for arm positions because the arm should stay at the requested position.</p>
 
-Use `whileTrue()` for a shooter when the shooter should stop immediately after the driver releases the button.
+    <p>Use <code>whileTrue()</code> for a shooter when the shooter should stop immediately after the driver releases the button.</p>
 
----
+    <hr>
 
-# Code Style Rules
+    <h1>Code Style Rules</h1>
 
-## Naming
+    <h2>Naming</h2>
 
-```java
-private static final int kMotorID = 5;
+<pre><code>private static final int kMotorID = 5;
 private final TalonFX shooterMotor = new TalonFX(kMotorID);
-private final NTEntry<Double> shootVelocityRps = new NTDouble("Shooter/ShootVelocityRPS", 60.0).setPersistent();
-```
+private final NTEntry&lt;Double&gt; shootVelocityRps = new NTDouble("Shooter/ShootVelocityRPS", 60.0).setPersistent();</code></pre>
 
-| Item | Style | Example |
-|---|---|---|
-| Class | PascalCase | `ExampleShooterSubsystem` |
-| Method | camelCase | `setTargetState()` |
-| Variable | camelCase | `targetVelocityRps` |
-| Hard constant | `k` + PascalCase | `kMotorID` |
-| NetworkTables entry | camelCase | `shootVelocityRps` |
-| Enum value | UPPER_SNAKE_CASE | `SLOW_SHOOT` |
-| Dashboard key | `Subsystem/ValueName` | `ExampleShooter/TopVelocityRPS` |
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Style</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Class</td>
+                <td>PascalCase</td>
+                <td><code>ExampleShooterSubsystem</code></td>
+            </tr>
+            <tr>
+                <td>Method</td>
+                <td>camelCase</td>
+                <td><code>setTargetState()</code></td>
+            </tr>
+            <tr>
+                <td>Variable</td>
+                <td>camelCase</td>
+                <td><code>targetVelocityRps</code></td>
+            </tr>
+            <tr>
+                <td>Hard constant</td>
+                <td><code>k</code> + PascalCase</td>
+                <td><code>kMotorID</code></td>
+            </tr>
+            <tr>
+                <td>NetworkTables entry</td>
+                <td>camelCase</td>
+                <td><code>shootVelocityRps</code></td>
+            </tr>
+            <tr>
+                <td>Enum value</td>
+                <td>UPPER_SNAKE_CASE</td>
+                <td><code>SLOW_SHOOT</code></td>
+            </tr>
+            <tr>
+                <td>Dashboard key</td>
+                <td><code>Subsystem/ValueName</code></td>
+                <td><code>ExampleShooter/TopVelocityRPS</code></td>
+            </tr>
+        </tbody>
+    </table>
 
-## Keep responsibilities separate
+    <h2>Keep responsibilities separate</h2>
 
-| Location | Should contain |
-|---|---|
-| Subsystem | Motors, sensors, subsystem states, motor configuration, periodic control, dashboard logs |
-| Command | A requested action, command sequence, timing, multi-subsystem coordination |
-| ControlBoard | Controller mappings and button bindings |
-| RobotContainer | Subsystem construction, control construction, autonomous selection |
-| Robot | Robot lifecycle methods and command scheduler |
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Should contain</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Subsystem</td>
+                <td>Motors, sensors, subsystem states, motor configuration, periodic control, dashboard logs</td>
+            </tr>
+            <tr>
+                <td>Command</td>
+                <td>A requested action, command sequence, timing, multi-subsystem coordination</td>
+            </tr>
+            <tr>
+                <td>ControlBoard</td>
+                <td>Controller mappings and button bindings</td>
+            </tr>
+            <tr>
+                <td>RobotContainer</td>
+                <td>Subsystem construction, control construction, autonomous selection</td>
+            </tr>
+            <tr>
+                <td>Robot</td>
+                <td>Robot lifecycle methods and command scheduler</td>
+            </tr>
+        </tbody>
+    </table>
 
-Do not put button logic inside a subsystem.
+    <p>Do not put button logic inside a subsystem.</p>
 
-Do not put direct motor-control code inside `ControlBoard`.
+    <p>Do not put direct motor-control code inside <code>ControlBoard</code>.</p>
 
-Do not put entire autonomous routines inside `Robot.java`.
+    <p>Do not put entire autonomous routines inside <code>Robot.java</code>.</p>
 
----
+    <hr>
 
-# Testing Checklist
+    <h1>Testing Checklist</h1>
 
-Before testing a new subsystem:
+    <p>Before testing a new subsystem:</p>
 
-- Verify the CAN ID.
-- Verify motor inversion.
-- Keep mechanisms safely elevated or disconnected when possible.
-- Start with low voltage, low percent output, or low target speed.
-- Confirm the desired state appears in SmartDashboard.
-- Confirm sensor position and velocity update correctly.
-- Confirm current draw is reasonable.
-- Watch motor temperature.
-- Confirm `IDLE` stops motors that should not remain powered.
-- Tune `kP` before adjusting `kI` and `kD`.
-- Test autonomous routines in a clear area.
+    <ul>
+        <li>Verify the CAN ID.</li>
+        <li>Verify motor inversion.</li>
+        <li>Keep mechanisms safely elevated or disconnected when possible.</li>
+        <li>Start with low voltage, low percent output, or low target speed.</li>
+        <li>Confirm the desired state appears in SmartDashboard.</li>
+        <li>Confirm sensor position and velocity update correctly.</li>
+        <li>Confirm current draw is reasonable.</li>
+        <li>Watch motor temperature.</li>
+        <li>Confirm <code>IDLE</code> stops motors that should not remain powered.</li>
+        <li>Tune <code>kP</code> before adjusting <code>kI</code> and <code>kD</code>.</li>
+        <li>Test autonomous routines in a clear area.</li>
+    </ul>
 
----
+    <hr>
 
-# Common Problems
+    <h1>Common Problems</h1>
 
-| Problem | Likely Cause | First Check |
-|---|---|---|
-| Motor does not move | Wrong CAN ID, disabled robot, command not scheduled | CAN ID, robot enabled state, subsystem dashboard state |
-| Motor moves backward | Incorrect inversion | `InvertedValue` in subsystem configuration |
-| Arm targets wrong position | Encoder units or setpoints are incorrect | Actual position dashboard value and target position |
-| Shooter does not reach target speed | Incorrect PID, friction, battery voltage, inversion | Actual velocity, target velocity, current draw |
-| Shooter remains on | Missing or broken `IDLE` behavior | Shooter default command and `IDLE` state |
-| Two commands fight each other | Commands have incorrect subsystem requirements | Command construction and `addRequirements()` |
-| NetworkTables update has no effect | Motor configuration was applied only in constructor | Add an intentional config-apply command |
-| Joystick drifts | Deadband too small | Driver deadband NetworkTables entry |
+    <table>
+        <thead>
+            <tr>
+                <th>Problem</th>
+                <th>Likely Cause</th>
+                <th>First Check</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Motor does not move</td>
+                <td>Wrong CAN ID, disabled robot, command not scheduled</td>
+                <td>CAN ID, robot enabled state, subsystem dashboard state</td>
+            </tr>
+            <tr>
+                <td>Motor moves backward</td>
+                <td>Incorrect inversion</td>
+                <td><code>InvertedValue</code> in subsystem configuration</td>
+            </tr>
+            <tr>
+                <td>Arm targets wrong position</td>
+                <td>Encoder units or setpoints are incorrect</td>
+                <td>Actual position dashboard value and target position</td>
+            </tr>
+            <tr>
+                <td>Shooter does not reach target speed</td>
+                <td>Incorrect PID, friction, battery voltage, inversion</td>
+                <td>Actual velocity, target velocity, current draw</td>
+            </tr>
+            <tr>
+                <td>Shooter remains on</td>
+                <td>Missing or broken <code>IDLE</code> behavior</td>
+                <td>Shooter default command and <code>IDLE</code> state</td>
+            </tr>
+            <tr>
+                <td>Two commands fight each other</td>
+                <td>Commands have incorrect subsystem requirements</td>
+                <td>Command construction and <code>addRequirements()</code></td>
+            </tr>
+            <tr>
+                <td>NetworkTables update has no effect</td>
+                <td>Motor configuration was applied only in constructor</td>
+                <td>Add an intentional config-apply command</td>
+            </tr>
+            <tr>
+                <td>Joystick drifts</td>
+                <td>Deadband too small</td>
+                <td>Driver deadband NetworkTables entry</td>
+            </tr>
+        </tbody>
+    </table>
 
----
+    <hr>
 
-<div align="center">
-
-## SW Robotics Code Standard
-
-**Build clearly. Log useful data. Tune carefully. Test safely.**
+    <div class="center">
+        <h2>SW Robotics Code Standard</h2>
+        <p><strong>Build clearly. Log useful data. Tune carefully. Test safely.</strong></p>
+    </div>
 
 </div>
+
+</body>
+</html>

@@ -6,8 +6,8 @@ package com.swrobotics.robot;
 
 import com.swrobotics.robot.control.ControlBoard;
 import com.swrobotics.robot.subsystems.drive.DriveSubsystem;
-import com.swrobotics.robot.subsystems.ExampleArmSubsystem;
-import com.swrobotics.robot.subsystems.ExampleShooterSubsystem;
+// import com.swrobotics.robot.subsystems.ExampleArmSubsystem;
+// import com.swrobotics.robot.subsystems.ExampleShooterSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 public class RobotContainer {
 
   public final DriveSubsystem drive;
-  public final ExampleArmSubsystem exampleArm;
-  public final ExampleShooterSubsystem exampleShooter;
+  // public final ExampleArmSubsystem exampleArm;
+  // public final ExampleShooterSubsystem exampleShooter;
   public final ControlBoard controlboard;
 
   public RobotContainer() {
     drive = new DriveSubsystem();
-    exampleArm = new ExampleArmSubsystem();
-    exampleShooter = new ExampleShooterSubsystem();
+    // exampleArm = new ExampleArmSubsystem();
+    // exampleShooter = new ExampleShooterSubsystem();
     controlboard = new ControlBoard(this);
   }
 
