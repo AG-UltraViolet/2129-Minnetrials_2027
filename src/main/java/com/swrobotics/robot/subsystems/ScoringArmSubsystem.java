@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ScoringArmSubsystem extends SubsystemBase {
     
     public enum State {
+        
         SCORE_MILK,
         SCORE_COOKIE,
         STOWING,
