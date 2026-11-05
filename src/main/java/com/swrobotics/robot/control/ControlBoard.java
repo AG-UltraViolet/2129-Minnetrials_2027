@@ -4,7 +4,7 @@ import com.swrobotics.lib.net.NTDouble;
 import com.swrobotics.lib.net.NTEntry;
 import com.swrobotics.robot.RobotContainer;
 import com.swrobotics.robot.config.IOAllocation;
-// import com.swrobotics.robot.subsystems.ExampleArmSubsystem;
+import com.swrobotics.robot.subsystems.ScoringArmSubsystem;
 // import com.swrobotics.robot.subsystems.ExampleShooterSubsystem;
 
 import edu.wpi.first.math.MathUtil;
@@ -63,7 +63,7 @@ public final class ControlBoard extends SubsystemBase {
                                 driver.getRightX(),
                                 driverDeadband.get())));
 
-//     operator.a().onTrue(robot.exampleArm.commandSetState(ExampleArmSubsystem.State.UP));
+        operator.a().onTrue(robot.exampleArm.commandSetState(ScoringArmSubsystem.State.SCORE_COOKIE));
 //     operator.b().onTrue(robot.exampleArm.commandSetState(ExampleArmSubsystem.State.DOWN));
 
 //     operator.rightTrigger().whileTrue(robot.exampleShooter.commandSetState(ExampleShooterSubsystem.State.SHOOT));

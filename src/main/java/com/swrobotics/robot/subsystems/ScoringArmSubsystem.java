@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import com.swrobotics.lib.net.NTDouble;
 import com.swrobotics.lib.net.NTEntry;
 import com.swrobotics.robot.config.IOAllocation;
@@ -14,11 +15,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleArmSubsystem extends SubsystemBase {
+public class ScoringArmSubsystem extends SubsystemBase {
     
     public enum State {
-        UP,
-        DOWN
+        SCORE_MILK,
+        SCORE_COOKIE,
+        STOWING,
+        ORIGIN
+    
     }
 
     
@@ -34,16 +38,18 @@ public class ExampleArmSubsystem extends SubsystemBase {
     private final NTEntry<Double> kD = new NTDouble("ExampleArm/kD", 0.1).setPersistent();
 
     // Position tunables
-    private final NTEntry<Double> upPositionRotations = new NTDouble("ExampleArm/UpPositionRotations", 0.0).setPersistent();
-    private final NTEntry<Double> downPositionRotations = new NTDouble("ExampleArm/DownPositionRotations", 20.0).setPersistent();
+    private final NTEntry<Double> Score_MilkPositionRotations = new NTDouble("ExampleArm/Score_MilkPositionRotations", 0.0).setPersistent();
+    private final NTEntry<Double> Score_CookiePositionRotations = new NTDouble("ExampleArm/Score_CookiePositionRotations", 20.0).setPersistent();
+    private final NTEntry<Double> StowingPositionRotations = new NTDouble("ExampleArm/StowingPositionRotations", 0.0).setPersistent();
+    private final NTEntry<Double> OriginPositionRotations = new NTDouble("ExampleArm/OriginPositionRotations", 20.0).setPersistent();
     private final NTEntry<Double> positionToleranceRotations = new NTDouble("ExampleArm/PositionToleranceRotations", 0.25).setPersistent();
 
     private final TalonFX armMotor = new TalonFX(IOAllocation.kExampleArmMotor);
     private final MotionMagicVoltage motionMagicControl = new MotionMagicVoltage(0.0);
 
-    private State targetState = State.UP;
+    private State targetState = State.ORIGIN;
 
-    public ExampleArmSubsystem() {
+    public ScoringArmSubsystem() {
         TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = kMotorInverted;
@@ -61,12 +67,19 @@ public class ExampleArmSubsystem extends SubsystemBase {
         double targetPositionRotations = 0.0;
 
         switch (targetState) {
-            case UP:
-                targetPositionRotations = upPositionRotations.get();
+            case SCORE_MILK:
+                targetPositionRotations = Score_MilkPositionRotations.get();
                 break;
 
-            case DOWN:
-                targetPositionRotations = downPositionRotations.get();
+            case SCORE_COOKIE:
+                targetPositionRotations = Score_CookiePositionRotations.get();
+                break;
+            case STOWING:
+                targetPositionRotations = StowingPositionRotations.get();
+                break;
+
+            case ORIGIN:
+                targetPositionRotations = OriginPositionRotations.get();
                 break;
         }
 
@@ -88,10 +101,6 @@ public class ExampleArmSubsystem extends SubsystemBase {
         targetState = state;
     }
 
-    public boolean isAtTarget() {
-        double targetPositionRotations = targetState == State.UP ? upPositionRotations.get() : downPositionRotations.get();
-        return Math.abs(targetPositionRotations - armMotor.getPosition().getValueAsDouble()) <= positionToleranceRotations.get();
-    }
 
     public Command commandSetState(State state) {
         return Commands.run(() -> setTargetState(state), this).withName("Arm " + state.name());
